@@ -153,7 +153,7 @@ def eliminar_registro():
         print("Registro eliminado correctamente.")
 
 
-# 10. Función principal
+# 10. Función_
 def menu():
     while True:
         print("\n--- 🔑 CONTROL DE ASISTENCIA 🔑 ---\n")
