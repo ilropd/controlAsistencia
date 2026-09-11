@@ -1,18 +1,73 @@
-import json, re, time
+import json, re, sys, time
 from datetime import datetime
 from BorroPantalla import Borro  # Desde la aplicación BorroPantalla importo la funcion.
 
+## Mejor usar esto para asegurar que el archivo JSON siempre esta en el mismo lugar,
+## en la misma carpeta del archivo principal
+# from pathlib import Path
+# FILE_NAME = Path(__file__).parent / "asistencia.json"
+
 FILE_NAME = "asistencia.json"
-Borro()
 
 
 # 1. Función
-def cargar_datos():
+def cargar_datos() -> list | None:
+    """
+    Carga y valida la estructura de los datos del archivo JSON.
+
+    Comprueba que el contenido del archivo sea una lista y, si contiene registros,
+    verifica que cada registro sea un diccionario con todos los campos requeridos.
+
+    Returns:
+        list:
+            Lista de registros si el archivo tiene una estructura válida.
+        []:
+            Si el archivo no existe o la lista de registros está vacía.
+        None:
+        Si el archivo contiene una estructura no válida o está dañado.
+    """
     try:
         with open(FILE_NAME, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
+            datos = json.load(f)
+
+        # El archivo debe contener una lista
+        if not isinstance(datos, list):
+            print("\n❌ La estructura del archivo JSON no es válida.")
+            return None
+
+        # Si la lista está vacía, los datos son válidos
+        if not datos:
+            return datos
+
+        campos_requeridos = {
+            "id",
+            "empleado",
+            "fecha",
+            "entrada",
+            "salida",
+            "horas_trabajadas",
+        }
+
+        # Verificamos la estructura de cada registro
+        for registro in datos:
+            if not isinstance(registro, dict):
+                print("\n❌ La estructura de los registros no es válida.")
+                return None
+
+            if not campos_requeridos.issubset(registro):
+                print("\n❌ Un registro no contiene todos los campos requeridos.")
+                return None
+
+        return datos
+    # Si no hay archivo, el sistema devuelva la lista vacía
+    except FileNotFoundError:
         return []
+
+    # Si el archivo ya existe, el sistema devuelva None para salir el programa
+    # Un usuario no pueda usar el programa si el archivo json está dañado
+    except json.JSONDecodeError:
+        print("\n❌ El archivo JSON está dañado.")
+        return None
 
 
 # 2. Función
@@ -153,30 +208,76 @@ def eliminar_registro():
         print("Registro eliminado correctamente.")
 
 
-# 10. Función_
-def menu():
+# 10. Funcion
+def salir_registro() -> None:
+    """
+    Solicita confirmación al usuario antes de salir del programa.
+    Muestra una pregunta de confirmación y permite responder con 's'/'si' para salir o 'n'/'no' para continuar en el programa.
+    Si la respuesta no es válida, vuelve a solicitar la confirmación.
+
+    Returns:
+        None: Si el usuario decide continuar, vuelve al menú principal.
+    """
     while True:
-        print("\n--- 🔑 CONTROL DE ASISTENCIA 🔑 ---\n")
-        print("1. Registrar Entrada/Salida (Crear)")
-        print("2. Ver Registros (Leer)")
-        print("3. Actualizar Registro")
-        print("4. Eliminar Registro")
-        print("5. Salir")
-        opcion = input("\nSeleccione una opción: ")
-        # Creamos todo el CRUD
-        if opcion == "1":
-            crear_registro()
-        elif opcion == "2":
-            leer_registros()
-        elif opcion == "3":
-            actualizar_registro()
-        elif opcion == "4":
-            eliminar_registro()
-        elif opcion == "5":
-            Borro()  # Borramos pantalla antes de salir.
-            break
+        salir = (
+            input("\n❓ ¿Está seguro de que desea salir del programa (s/n)? ")
+            .strip()
+            .lower()
+        )
+
+        if salir in ("s", "si"):
+            print("\n👋 ¡Hasta pronto!")
+            time.sleep(2)
+            Borro()
+            sys.exit(0)
+
+        elif salir in ("n", "no"):
+            Borro()
+            return
+
         else:
-            print("Opción inválida en el menú.")
+            print(
+                "\n❌ Opción no válida. Por favor, introduce 's' para Sí o 'n' para No."
+            )
+            time.sleep(2)
+
+            # "\033[4A" — subir el cursor 4 líneas
+            # # "\033[J" — limpiar la pantalla desde el cursor hacia abajo
+            print("\033[4A\033[J", end="")
+
+
+# 11. Función_
+def menu() -> None:
+    Borro()
+    while True:
+        menu = [
+            "1. Registrar Entrada/Salida (Crear)",
+            "2. Ver Registros (Leer)",
+            "3. Actualizar Registro",
+            "4. Eliminar Registro",
+            "5. Salir",
+        ]
+        print("\n--- 🔑 CONTROL DE ASISTENCIA 🔑 ---\n")
+        print("\n".join(menu))
+
+        opcion = input("\nSeleccione una opción: ").strip()
+
+        match opcion:
+            case "1":
+                crear_registro()
+            case "2":
+                leer_registros()
+            case "3":
+                actualizar_registro()
+            case "4":
+                eliminar_registro()
+            case "5":
+                salir_registro()
+            case _:
+                input(
+                    "\n❌ Opción inválida en el menú. Pulsa [ENTER] para volver al menú principal."
+                )
+                Borro()
 
 
 # Comienzo del program evitando interferencias de terceros. ❓
