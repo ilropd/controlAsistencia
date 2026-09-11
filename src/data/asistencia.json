@@ -1,39 +1,18 @@
 {
     "data": [
         {
-            "id": "dad8ec09-9032-48fe-878d-d88e81e74825",
-            "empleado": "ERT565",
-            "fecha": "2026-08-10",
-            "entrada": "12:45:00",
-            "salida": "19:45:00"
-        },
-        {
-            "id": "69ad4c05-9a6e-46c6-8c1f-39bb8d4ed21e",
-            "empleado": "WWW404",
-            "fecha": "2025-12-11",
+            "id": "93d79519-fc4e-4168-8a01-a53fcb896c46",
+            "empleado": "QQQ111",
+            "fecha": "2026-09-11T11:11:45.043984",
             "entrada": "10:00:00",
-            "salida": "19:05:00"
+            "salida": "15:00:00"
         },
         {
-            "id": "ef21a544-4be7-4409-a444-30138aadcc5b",
-            "empleado": "NNN000",
-            "fecha": "2026-02-15",
-            "entrada": "11:45:00",
-            "salida": null
-        },
-        {
-            "id": "9b6bb52d-d295-46f2-bbc8-c03b72d64d11",
-            "empleado": "ERT777",
-            "fecha": "2026-09-11T10:51:11.462532",
-            "entrada": "18:45:00",
-            "salida": "21:45:00"
-        },
-        {
-            "id": "08de8bdc-4fff-4635-ab9d-169dc6a5e1c9",
-            "empleado": "RRR555",
-            "fecha": "2026-09-11T10:54:48.068953",
-            "entrada": "12:00:00",
-            "salida": "15:09:00"
+            "id": "49a07abc-f885-4424-89a1-5cb9531693c1",
+            "empleado": "RTR555",
+            "fecha": "2026-09-11T11:12:10.466594",
+            "entrada": "08:00:00",
+            "salida": "22:05:00"
         }
     ]
 }

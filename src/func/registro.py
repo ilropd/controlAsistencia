@@ -83,7 +83,7 @@ def leer(empleado=None, fecha=None):
     if fecha:
         registros = [
             registro for registro in registros
-            if registro.get("fecha") == fecha.strftime("%d/%m/%Y")
+            if registro.get("fecha") == fecha
         ]
 
     if not registros:
@@ -112,7 +112,7 @@ def leer(empleado=None, fecha=None):
 
         print(f"ID:        {registro.get('id')}")
         print(f"Empleado:  {registro.get('empleado')}")
-        print(f"Fecha:     {registro.get('fecha')}")
+        print(f"Fecha:     {datetime.fromisoformat(registro.get('fecha')).strftime("%d/%m/%Y")}")
         print(f"Entrada:   {entrada}")
         print(f"Salida:    {salida or 'Pendiente'}")
         print(f"Worktime:  {worktime_str}")
