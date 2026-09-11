@@ -115,6 +115,10 @@ def crear_registro():
 # 7. Función
 def leer_registros():
     datos = cargar_datos()
+    
+    if datos is None:
+        return
+    
     if not datos:
         print("No hay registros en el sistema.")
         time.sleep(5)  # Aplico un Temporizador.
