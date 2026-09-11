@@ -3,10 +3,9 @@ import time
 import uuid
 from datetime import datetime, date
 
-from .repositorio import cargar, guardar
-
 from util.limpiar_pantalla import limpiar_pantalla
-from util.validators import validar_formato_hora, validar_id_empleado
+from util.validators import validar_id_empleado
+from .repositorio import cargar, guardar
 
 json_data = cargar()
 
@@ -19,7 +18,10 @@ def crear_registro():
         time.sleep(2)
         limpiar_pantalla()
         return None
+    fecha = datetime.now()
+    '''
     while True:
+
         try:
             fecha = datetime.strptime(input(f"Fecha (DD/MM/YYYY): "), "%d/%m/%Y").date()
 
@@ -29,6 +31,7 @@ def crear_registro():
             break
         except ValueError:
             print(f"Fecha inválida. Use el formato DD/MM/YYYY.")
+'''
     while True:
         try:
             entrada = datetime.strptime(
@@ -80,7 +83,7 @@ def leer(empleado=None, fecha=None):
     if fecha:
         registros = [
             registro for registro in registros
-            if registro.get("fecha") == fecha
+            if registro.get("fecha") == fecha.strftime("%d/%m/%Y")
         ]
 
     if not registros:
