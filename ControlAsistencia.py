@@ -43,6 +43,31 @@ def calcular_horas(entrada, salida):
     return round(horas, 2)
 
 
+#Funcion para mostrar registros 
+def mostrar_registros(registros):
+    print(
+        f"{'ID':<5} | "
+        f"{'Empleado':<8} | "
+        f"{'Fecha':<10} | "
+        f"{'Entrada':<7} | "
+        f"{'Salida':<9} | "
+        f"{'Horas':<6}"
+    )
+
+    print("-" * 61)
+    
+    for r in registros:
+        print(
+            f"{r['id']:<5} | "
+            f"{r['empleado']:<8} | "
+            f"{r['fecha']:<10} | "
+            f"{r['entrada']:<7} | "
+            f"{r['salida']:<9} | "
+            f"{r['horas_trabajadas']:<6}"
+        )
+    
+
+
 # 6. Función
 def crear_registro():
     datos = cargar_datos()
@@ -95,10 +120,8 @@ def leer_registros():
         time.sleep(5)  # Aplico un Temporizador.
         Borro()
         return
-    for r in datos:
-        print(
-            f"ID: {r['id']} | Empleado: {r['empleado']} | Fecha: {r['fecha']} | Entrada: {r['entrada']} | Salida: {r['salida']} | Horas: {r['horas_trabajadas']}"
-        )
+    
+    mostrar_registros(datos)
 
 
 # 8. Función
