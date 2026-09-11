@@ -67,6 +67,17 @@ def mostrar_registros(registros):
         )
     
 
+def solicitar_confirmacion(mensaje):
+    while True:
+        respuesta = input(f"{mensaje} (s/n): ").strip().lower()
+        
+        if respuesta == "s":
+            return True
+        
+        if respuesta == "n":
+            return False
+        
+        print("Opción invalida. Introduzca s o n")
 
 # 6. Función
 def crear_registro():
@@ -166,18 +177,34 @@ def actualizar_registro():
 # 9. Función
 def eliminar_registro():
     datos = cargar_datos()
+    
+    if datos is None:
+        return
+    
+    if not datos:
+        print("No hay registros en el sistema")
+        return
+    
     try:
-        reg_id = int(input("Ingrese el ID del registro a eliminar: "))
+        reg_id = int(input("Ingrese el ID del registro a eliminar: ").strip())
+    
     except ValueError:
         print("ID inválido.")
         return
 
-    nuevos_datos = [r for r in datos if r["id"] != reg_id]
-    if len(nuevos_datos) == len(datos):
-        print("Registro no encontrado.")
-    else:
-        guardar_datos(nuevos_datos)
-        print("Registro eliminado correctamente.")
+    for registro in datos:
+        if registro["id"] == reg_id:
+            mostrar_registros([registro])
+            if solicitar_confirmacion("¿Está seguro de que desea eliminar este registro?"):
+                datos.remove(registro)
+                guardar_datos(datos)
+                print("\nRegistro eliminado correctamente.")
+            else:
+                print("Eliminacion canelada")
+            
+            return
+    
+    print("Registro no encontrado.")
 
 
 # 10. Función_
