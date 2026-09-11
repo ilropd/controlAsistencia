@@ -1,0 +1,15 @@
+{
+  "id_del_empleado": "ID del empleado (ej. EMP001): ",
+  "formato_de_id_invalido":"Formato de ID inválido",
+  "hora_de_entrada": "Hora de entrada (HH:MM): ",
+  "hora_de_salida": "Hora de salida (HH:MM, presione Enter si queda pendiente): ",
+  "hora_salida_posterior_hora_entrada": "La hora de salida debe ser posterior a la hora de entrada.",
+  "hora_invalida": "Hora inválida. Use el formato HH:MM.",
+  "ingrese_id_registro_actualizar": "Ingrese el ID del registro a actualizar: ",
+  "id_invalido": "ID inválido.",
+  "registro_encontrado": "Registro encontrado:",
+  "registro_no_encontrado": "Registro no encontrado:",
+  "registro_actualizado": "Registro actualizado correctamente.",
+  "nueva_entrada": "Nueva entrada",
+  "press_enter": "Pulsa Enter para continuar."
+}

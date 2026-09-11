@@ -1,0 +1,1 @@
+FILE_NAME = "data/asistencia.json"

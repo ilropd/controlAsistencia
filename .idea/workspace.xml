@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="42998060-9f34-461d-9447-79b41a5e039c" name="Changes" comment="" />
+    <list default="true" id="42998060-9f34-461d-9447-79b41a5e039c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/cargar_json.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/constantes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/constantes/const.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/guardar_json.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/registro.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/mensajes.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/horas.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/messages.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/validators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BorroPantalla.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/pantalla.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ControlAsistencia.py" beforeDir="false" afterPath="$PROJECT_DIR$/ControlAsistencia.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,18 +47,22 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "3-actualizar-registro",
     "last_opened_file_path": "/Users/tim/Downloads/CURSO_SOC/10_09_2026/asistencia_laboral",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/utils" />
       <recent name="$PROJECT_DIR$/src/func" />
       <recent name="$PROJECT_DIR$/src/storage" />
     </key>

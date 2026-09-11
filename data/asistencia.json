@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "empleado": "AAA111",
+        "fecha": "12/09/2026",
+        "entrada": "10:00:00",
+        "salida": "Pendiente",
+        "horas_trabajadas": "Pendiente"
+    },
+    {
+        "id": 2,
+        "empleado": "EEE111",
+        "fecha": "12/09/2026",
+        "entrada": "10:00:00",
+        "salida": "Pendiente",
+        "horas_trabajadas": "Pendiente"
+    }
+]
