@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="42998060-9f34-461d-9447-79b41a5e039c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ControlAsistencia.py" beforeDir="false" afterPath="$PROJECT_DIR$/ControlAsistencia.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/registro.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/registro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/registros/actualizar.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/registros/actualizar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/registros/crear.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/registros/crear.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/mensajes.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/mensajes.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/asistencia.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/mensajes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/validators.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,11 +50,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/registros" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/utils" />
       <recent name="$PROJECT_DIR$/src/func" />
-      <recent name="$PROJECT_DIR$/src/storage" />
     </key>
   </component>
   <component name="SharedIndexes">

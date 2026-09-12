@@ -1,5 +1,6 @@
 {
   "id_del_empleado": "ID del empleado (ej. EMP001): ",
+  "registro_ya_existente": "Ya existe un registro para el empleado con el ID introducido para hoy.",
   "introduzca_fecha_para_cambios.": "Introduzca la fecha prevista para los cambios (DD/MM/YYYY):",
   "formato_de_id_invalido":"Formato de ID inválido",
   "hora_de_entrada": "Hora de entrada (HH:MM): ",
