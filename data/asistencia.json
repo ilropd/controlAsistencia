@@ -2,17 +2,33 @@
     {
         "id": 1,
         "empleado": "AAA111",
-        "fecha": "12/09/2026",
-        "entrada": "10:00:00",
+        "fecha": "11/09/2026",
+        "entrada": "07:00",
+        "salida": "23:45",
+        "horas_trabajadas": "16:45"
+    },
+    {
+        "id": 2,
+        "empleado": "WWW333",
+        "fecha": "11/09/2026",
+        "entrada": "05:00",
         "salida": "Pendiente",
         "horas_trabajadas": "Pendiente"
     },
     {
-        "id": 2,
-        "empleado": "EEE111",
+        "id": 3,
+        "empleado": "AAA111",
         "fecha": "12/09/2026",
-        "entrada": "10:00:00",
-        "salida": "Pendiente",
-        "horas_trabajadas": "Pendiente"
+        "entrada": "08:00",
+        "salida": "12:45",
+        "horas_trabajadas": "01:45"
+    },
+    {
+        "id": 4,
+        "empleado": "EEE333",
+        "fecha": "12/09/2026",
+        "entrada": "12:00",
+        "salida": "19:00",
+        "horas_trabajadas": "07:00"
     }
 ]

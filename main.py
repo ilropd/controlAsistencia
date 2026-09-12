@@ -1,7 +1,11 @@
-import json,re
+import re
 from datetime import datetime
+
+from app.registros.actualizar import actualizar_registro
+from app.registros.crear import crear_registro
+from app.registros.eliminar import eliminar_registro
+from app.registros.leer import leer_registros
 from utils.pantalla import limpiar_pantalla
-from app.registro import actualizar_registro, crear_registro, leer_registros, eliminar_registro
 
 limpiar_pantalla()
 

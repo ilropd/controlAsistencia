@@ -1,5 +1,6 @@
 {
   "id_del_empleado": "ID del empleado (ej. EMP001): ",
+  "introduzca_fecha_para_cambios.": "Introduzca la fecha prevista para los cambios (DD/MM/YYYY):",
   "formato_de_id_invalido":"Formato de ID inválido",
   "hora_de_entrada": "Hora de entrada (HH:MM): ",
   "hora_de_salida": "Hora de salida (HH:MM, presione Enter si queda pendiente): ",
@@ -8,8 +9,13 @@
   "ingrese_id_registro_actualizar": "Ingrese el ID del registro a actualizar: ",
   "id_invalido": "ID inválido.",
   "registro_encontrado": "Registro encontrado:",
+  "registros_encontrados": "Registros encontrados:",
   "registro_no_encontrado": "Registro no encontrado:",
   "registro_actualizado": "Registro actualizado correctamente.",
+  "no_hay_registros_para_id_fecha_seleccionada.": "No hay registros para este ID de empleado en la fecha seleccionada.",
+  "seleccione_otra_fecha.": "Seleccione otra fecha.",
+  "fecha_invalida": "Fecha inválida. Use el formato DD/MM/YYYY.",
   "nueva_entrada": "Nueva entrada",
+  "presione_enter_mantener_valor_actual": "O presione Enter para mantener el valor actual:",
   "press_enter": "Pulsa Enter para continuar."
 }
