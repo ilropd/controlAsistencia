@@ -65,7 +65,13 @@ def mostrar_registros(registros):
             f"{r['salida']:<9} | "
             f"{r['horas_trabajadas']:<6}"
         )
-    
+
+def buscar_registro_por_id(registros, reg_id):
+    for registro in registros:
+        if registro["id"] == reg_id:
+            return registro
+
+    return None  
 
 def solicitar_confirmacion(mensaje):
     while True:
@@ -230,13 +236,11 @@ def eliminar_registro():
                 print("ID inválido.")
                 continue
 
-            registro_seleccionado = None
-                
-            for registro in registros_empleado:
-                if registro["id"] == reg_id:
-                    registro_seleccionado = registro
-                    break
-
+            registro_seleccionado = buscar_registro_por_id(
+                registros_empleado,
+                reg_id
+            )
+            
             if registro_seleccionado is None:
                 print("El registro indicado no pertenece a este empleado.")
                 continue
