@@ -77,7 +77,16 @@ def buscar_registros_por_empleado(datos, emp_id):
     return [
         registro for registro in datos
         if registro["empleado"] == emp_id
-    ]  
+    ]
+
+def solicitar_id_empleado():
+    while True:
+        emp_id = input("Ingrese el ID del empleado: ").strip().upper()
+
+        if validar_id_empleado(emp_id):
+            return emp_id
+
+        print("ID de empleado inválido.")  
 
 def solicitar_confirmacion(mensaje):
     while True:
@@ -199,14 +208,7 @@ def eliminar_registro():
         time.sleep(1)
         return
     
-    while True:
-        emp_id = input("Ingrese el ID del empleado: ").strip().upper()
-        
-        if validar_id_empleado(emp_id):
-            print(f"ID {emp_id} válido.\n")
-            break
-        
-        print("ID de empleado inválido")
+    emp_id = solicitar_id_empleado()
     
     registros_empleado = buscar_registros_por_empleado(
         datos,
