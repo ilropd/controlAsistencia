@@ -11,8 +11,16 @@
         "id": 2,
         "empleado": "WWW333",
         "fecha": "12/09/2026",
-        "entrada": "11:00",
-        "salida": "12:00",
-        "horas_trabajadas": "01:00"
+        "entrada": "11:11",
+        "salida": "22:22",
+        "horas_trabajadas": "11:11"
+    },
+    {
+        "id": 2,
+        "empleado": "WWW334",
+        "fecha": "13/09/2026",
+        "entrada": "15:00",
+        "salida": "22:00",
+        "horas_trabajadas": "07:00"
     }
 ]

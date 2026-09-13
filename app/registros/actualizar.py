@@ -38,20 +38,12 @@ def actualizar_registro():
                 limpiar_pantalla()
                 continue
 
-            # Cuando solo existe un registro, se muestra directamente
-            # y se continúa con la selección de la fecha.
-            if len(coincidencias) == 1:
-                print(msg("registro_encontrado"))
-                print("-------------------------")
-                for key, value in coincidencias[0].items():
-                 print("".join(f"{str(key).upper()}: {value}"))
-                print("-------------------------")
-
-                break
-
             # Si existen varios registros para el mismo empleado,
             # se muestran todos para informar al usuario.
-            print(msg("registros_encontrados"))
+            if len(coincidencias) == 1:
+                print(msg("registro_encontrado"))
+            else:
+                print(msg("registros_encontrados"))
             for coincidencia in coincidencias:
                 print("-------------------------")
                 for key, value in coincidencia.items():
@@ -176,9 +168,9 @@ def actualizar_registro():
         # Calcula de nuevo las horas trabajadas únicamente cuando existen
         # una entrada y una salida válidas y la salida no está pendiente.
         if (
-            data_encontrada.get("entrada")
-            and data_encontrada.get("salida")
-            and data_encontrada["salida"] != "Pendiente"
+                data_encontrada.get("entrada")
+                and data_encontrada.get("salida")
+                and data_encontrada["salida"] != "Pendiente"
         ):
             data_encontrada["horas_trabajadas"] = calcular_tiempo_trabajado(
                 data_encontrada["entrada"],
