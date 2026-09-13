@@ -123,6 +123,22 @@ def eliminar_un_registro(datos, registros_empleado):
     time.sleep(1)
     
 
+def eliminar_todos_registros(datos, emp_id):
+    if solicitar_confirmacion(
+        f"¿Está seguro de que desea eliminar todos los registros de {emp_id}?"
+    ):
+        datos = [
+            registro for registro in datos
+            if registro["empleado"] != emp_id
+        ]
+
+        guardar_datos(datos)
+        print("\nTodos los registros del empleado han sido eliminados.")
+    else:
+        print("Eliminación cancelada.")
+
+    time.sleep(1)
+
 
 def solicitar_confirmacion(mensaje):
     while True:
@@ -276,16 +292,7 @@ def eliminar_registro():
         return
 
     elif opcion == "2":
-        if solicitar_confirmacion(f"Estas seguro que desea eliminar todos los registros de {emp_id}?"):
-            datos = [
-                registro for registro in datos
-                if registro["empleado"] != emp_id
-            ]
-            guardar_datos(datos)
-            print("\nTodos los registros del empleado han sido eliminados.")
-        else:
-            print("Eliminación cancelada")
-        time.sleep(1)
+        eliminar_todos_registros(datos, emp_id)
         return
 
     elif opcion == "3":
