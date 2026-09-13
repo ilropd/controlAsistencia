@@ -205,6 +205,20 @@ def eliminar_registro():
     
     mostrar_registros(registros_empleado)
     
+    while True:
+        print("\n1. Eliminar un registro")
+        print("2. Eliminar todos los registros")
+        print("3. Cancelar")
+        
+        opcion = input("Seleccione una opción: ").strip()
+
+        if opcion in ("1", "2", "3"):
+            break
+
+        print("Opción inválida.")
+
+    print(f"Opción seleccionada: {opcion}")
+    
     try:
         reg_id = int(input("Ingrese el ID del registro a eliminar: ").strip())
     
