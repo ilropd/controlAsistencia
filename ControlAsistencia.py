@@ -140,6 +140,19 @@ def eliminar_todos_registros(datos, emp_id):
     time.sleep(1)
 
 
+def solicitar_opcion_eliminacion():
+    while True:
+        print("\n1. Eliminar un registro")
+        print("2. Eliminar todos los registros")
+        print("3. Cancelar")
+
+        opcion = input("Seleccione una opción: ").strip()
+
+        if opcion in ("1", "2", "3"):
+            return opcion
+
+        print("Opción inválida.")
+
 def solicitar_confirmacion(mensaje):
     while True:
         respuesta = input(f"{mensaje} (s/n): ").strip().lower()
@@ -273,32 +286,21 @@ def eliminar_registro():
         return
     
     mostrar_registros(registros_empleado)
-    
-    while True:
-        print("\n1. Eliminar un registro")
-        print("2. Eliminar todos los registros")
-        print("3. Cancelar")
-        
-        opcion = input("Seleccione una opción: ").strip()
+            
+    opcion = solicitar_opcion_eliminacion()
 
-        if opcion not in ("1", "2", "3"):
-            print("Opción inválida.")
-            continue
-        
-        break
-    
     if opcion == "1":
         eliminar_un_registro(datos, registros_empleado)
-        return
+        
 
     elif opcion == "2":
         eliminar_todos_registros(datos, emp_id)
-        return
+        
 
     elif opcion == "3":
         print("Eliminación cancelada.")
         time.sleep(1)
-        return
+        
 
 
 # 10. Función_
