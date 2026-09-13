@@ -86,7 +86,43 @@ def solicitar_id_empleado():
         if validar_id_empleado(emp_id):
             return emp_id
 
-        print("ID de empleado inválido.")  
+        print("ID de empleado inválido.")
+        
+def eliminar_un_registro(datos, registros_empleado):
+    while True:
+        try:
+            reg_id = int(
+                input("Ingrese el ID del registro a eliminar: ").strip()
+            )
+        except ValueError:
+            print("ID inválido.")
+            continue
+
+        registro_seleccionado = buscar_registro_por_id(
+            registros_empleado,
+            reg_id
+        )
+
+        if registro_seleccionado is None:
+            print("El registro indicado no pertenece a este empleado.")
+            continue
+
+        break
+
+    mostrar_registros([registro_seleccionado])
+
+    if solicitar_confirmacion(
+        "¿Está seguro de que desea eliminar este registro?"
+    ):
+        datos.remove(registro_seleccionado)
+        guardar_datos(datos)
+        print("\nRegistro eliminado correctamente.")
+    else:
+        print("Eliminación cancelada.")
+
+    time.sleep(1)
+    
+
 
 def solicitar_confirmacion(mensaje):
     while True:
@@ -236,35 +272,9 @@ def eliminar_registro():
         break
     
     if opcion == "1":
-        while True:
-            try:
-                reg_id = int(input("Ingrese el ID del registro a eliminar: ").strip())
-        
-            except ValueError:
-                print("ID inválido.")
-                continue
-
-            registro_seleccionado = buscar_registro_por_id(
-                registros_empleado,
-                reg_id
-            )
-            
-            if registro_seleccionado is None:
-                print("El registro indicado no pertenece a este empleado.")
-                continue
-            break
-                                        
-        mostrar_registros([registro_seleccionado])
-            
-        if solicitar_confirmacion("¿Está seguro de que desea eliminar este registro?"):
-            datos.remove(registro_seleccionado)
-            guardar_datos(datos)
-            print("\nRegistro eliminado correctamente.")
-        else:
-            print("Eliminacion canelada")
-        time.sleep(1)       
+        eliminar_un_registro(datos, registros_empleado)
         return
-    
+
     elif opcion == "2":
         if solicitar_confirmacion(f"Estas seguro que desea eliminar todos los registros de {emp_id}?"):
             datos = [
