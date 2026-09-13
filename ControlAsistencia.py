@@ -71,7 +71,13 @@ def buscar_registro_por_id(registros, reg_id):
         if registro["id"] == reg_id:
             return registro
 
-    return None  
+    return None
+
+def buscar_registros_por_empleado(datos, emp_id):
+    return [
+        registro for registro in datos
+        if registro["empleado"] == emp_id
+    ]  
 
 def solicitar_confirmacion(mensaje):
     while True:
@@ -202,10 +208,10 @@ def eliminar_registro():
         
         print("ID de empleado inválido")
     
-    registros_empleado = [
-        registro for registro in datos
-        if registro["empleado"] == emp_id
-    ]
+    registros_empleado = buscar_registros_por_empleado(
+        datos,
+        emp_id
+    )
     
     if not registros_empleado:
         print("No hay registros para este empleado.")
