@@ -212,33 +212,52 @@ def eliminar_registro():
         
         opcion = input("Seleccione una opción: ").strip()
 
-        if opcion in ("1", "2", "3"):
-            break
-
-        print("Opción inválida.")
+        if opcion not in ("1", "2", "3"):
+            print("Opción inválida.")
+            continue
+        
+        break
 
     print(f"Opción seleccionada: {opcion}")
     
-    try:
-        reg_id = int(input("Ingrese el ID del registro a eliminar: ").strip())
-    
-    except ValueError:
-        print("ID inválido.")
+    if opcion == "1":
+        while True:
+            try:
+                reg_id = int(input("Ingrese el ID del registro a eliminar: ").strip())
+        
+            except ValueError:
+                print("ID inválido.")
+                continue
+
+            registro_seleccionado = None
+                
+            for registro in registros_empleado:
+                if registro["id"] == reg_id:
+                    registro_seleccionado = registro
+                    break
+
+            if registro_seleccionado is None:
+                print("El registro indicado no pertenece a este empleado.")
+                continue
+            break
+                                        
+        mostrar_registros([registro_seleccionado])
+            
+        if solicitar_confirmacion("¿Está seguro de que desea eliminar este registro?"):
+            datos.remove(registro_seleccionado)
+            guardar_datos(datos)
+            print("\nRegistro eliminado correctamente.")
+        else:
+            print("Eliminacion canelada")
+                
+        return
+    elif opcion == "2":
+        print("Eliminar todos los registros todavía no implementado.")
         return
 
-    for registro in datos:
-        if registro["id"] == reg_id:
-            mostrar_registros([registro])
-            if solicitar_confirmacion("¿Está seguro de que desea eliminar este registro?"):
-                datos.remove(registro)
-                guardar_datos(datos)
-                print("\nRegistro eliminado correctamente.")
-            else:
-                print("Eliminacion canelada")
-            
-            return
-    
-    print("Registro no encontrado.")
+    elif opcion == "3":
+        print("Eliminación cancelada.")
+        return
 
 
 # 10. Función_
