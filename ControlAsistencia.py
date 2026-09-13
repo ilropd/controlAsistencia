@@ -122,7 +122,7 @@ def solicitar_registro_a_eliminar(registros_empleado):
             print("El registro indicado no pertenece a este empleado.")
             continue
     
-        break
+        return registro_seleccionado
 
 def solicitar_opcion_eliminacion():
     """Muestra el menú de eliminacion y solicita una opcion valida
