@@ -252,7 +252,15 @@ def eliminar_registro():
                 
         return
     elif opcion == "2":
-        print("Eliminar todos los registros todavía no implementado.")
+        if solicitar_confirmacion(f"Estas seguro que desea eliminar todos los registros de {emp_id}?"):
+            datos = [
+                registro for registro in datos
+                if registro["empleado"] != emp_id
+            ]
+            guardar_datos(datos)
+            print("\nTodos los registros del empleado han sido eliminados.")
+        else:
+            print("Eliminación cancelada")
         return
 
     elif opcion == "3":
