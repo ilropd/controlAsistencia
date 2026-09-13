@@ -1,6 +1,6 @@
 import json
 
-from app.constantes.const import FILE_NAME
+from constantes.const import FILE_NAME
 
 
 def guardar_datos(datos):

@@ -1,6 +1,6 @@
 import time
 
-from app.cargar_json import cargar_datos
+from json_utils.cargar_json import cargar_datos
 from utils.pantalla import limpiar_pantalla
 
 

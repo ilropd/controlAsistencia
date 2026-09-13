@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from app.cargar_json import cargar_datos
-from app.guardar_json import guardar_datos
+from json_utils.cargar_json import cargar_datos
+from json_utils.guardar_json import guardar_datos
 from utils.horas import calcular_tiempo_trabajado
 from utils.mensajes import msg
 from utils.pantalla import limpiar_pantalla
@@ -42,15 +42,21 @@ def actualizar_registro():
             # y se continúa con la selección de la fecha.
             if len(coincidencias) == 1:
                 print(msg("registro_encontrado"))
-                print(coincidencias[0])
+                print("-------------------------")
+                for key, value in coincidencias[0].items():
+                 print("".join(f"{str(key).upper()}: {value}"))
+                print("-------------------------")
+
                 break
 
             # Si existen varios registros para el mismo empleado,
             # se muestran todos para informar al usuario.
             print(msg("registros_encontrados"))
             for coincidencia in coincidencias:
-                print(coincidencia)
-                print("-" * len(coincidencia))
+                print("-------------------------")
+                for key, value in coincidencia.items():
+                    print("".join(f"{str(key).upper()}: {value}"))
+                print("-------------------------")
             break
 
         except ValueError:

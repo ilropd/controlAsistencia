@@ -1,5 +1,5 @@
-from app.cargar_json import cargar_datos
-from app.guardar_json import guardar_datos
+from json_utils.cargar_json import cargar_datos
+from json_utils.guardar_json import guardar_datos
 
 
 def eliminar_registro():

@@ -1,10 +1,10 @@
 import re
 from datetime import datetime
 
-from app.registros.actualizar import actualizar_registro
-from app.registros.crear import crear_registro
-from app.registros.eliminar import eliminar_registro
-from app.registros.leer import leer_registros
+from registros.actualizar import actualizar_registro
+from registros.crear import crear_registro
+from registros.eliminar import eliminar_registro
+from registros.leer import leer_registros
 from utils.pantalla import limpiar_pantalla
 
 limpiar_pantalla()
