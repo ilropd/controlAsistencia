@@ -48,12 +48,12 @@ La función utiliza varios módulos internos del proyecto:
 ```python
 from datetime import datetime
 
-from app.cargar_json import cargar_datos
-from app.guardar_json import guardar_datos
-from utils.horas import calcular_tiempo_trabajado
-from utils.mensajes import msg
-from utils.pantalla import limpiar_pantalla
-from utils.validators import validar_id_empleado
+from app.json_utils.cargar_json import cargar_datos
+from app.json_utils.guardar_json import guardar_datos
+from app.utils import calcular_tiempo_trabajado
+from app.utils.mensajes import msg
+from app.utils import limpiar_pantalla
+from app.utils import validar_id_empleado
 ```
 
 ### `datetime`
