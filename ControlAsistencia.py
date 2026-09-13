@@ -179,10 +179,12 @@ def eliminar_registro():
     datos = cargar_datos()
     
     if datos is None:
+        time.sleep(1)
         return
     
     if not datos:
         print("No hay registros en el sistema")
+        time.sleep(1)
         return
     
     while True:
@@ -201,6 +203,7 @@ def eliminar_registro():
     
     if not registros_empleado:
         print("No hay registros para este empleado.")
+        time.sleep(1)
         return
     
     mostrar_registros(registros_empleado)
@@ -217,8 +220,6 @@ def eliminar_registro():
             continue
         
         break
-
-    print(f"Opción seleccionada: {opcion}")
     
     if opcion == "1":
         while True:
@@ -249,8 +250,9 @@ def eliminar_registro():
             print("\nRegistro eliminado correctamente.")
         else:
             print("Eliminacion canelada")
-                
+        time.sleep(1)       
         return
+    
     elif opcion == "2":
         if solicitar_confirmacion(f"Estas seguro que desea eliminar todos los registros de {emp_id}?"):
             datos = [
@@ -261,10 +263,12 @@ def eliminar_registro():
             print("\nTodos los registros del empleado han sido eliminados.")
         else:
             print("Eliminación cancelada")
+        time.sleep(1)
         return
 
     elif opcion == "3":
         print("Eliminación cancelada.")
+        time.sleep(1)
         return
 
 
