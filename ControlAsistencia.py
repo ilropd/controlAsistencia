@@ -99,11 +99,11 @@ def solicitar_id_empleado():
             return emp_id
 
         print("ID de empleado inválido.")
-        
-def eliminar_un_registro(datos, registros_empleado):
-    """Permite selecionar y eliminar un registro de un empleado
-    Args: datos(list), registros_empleados(list): registros pertencientes al empleado
-    Returns: Ninguno"""
+
+def solicitar_registro_a_eliminar(registros_empleado):
+    """Solicita un Id de registro hasta encontrar uno del empleado
+    Args: registros_empleados(list): registros del empleado
+    Returns: dict: registros selecionado para eliminar"""
     while True:
         try:
             reg_id = int(
@@ -112,17 +112,57 @@ def eliminar_un_registro(datos, registros_empleado):
         except ValueError:
             print("ID inválido.")
             continue
-
+    
         registro_seleccionado = buscar_registro_por_id(
             registros_empleado,
             reg_id
         )
-
+    
         if registro_seleccionado is None:
             print("El registro indicado no pertenece a este empleado.")
             continue
-
+    
         break
+
+def solicitar_opcion_eliminacion():
+    """Muestra el menú de eliminacion y solicita una opcion valida
+    Returns:opcion(str): opcion selecionada por el usuario"""
+    while True:
+        print("\n1. Eliminar un registro")
+        print("2. Eliminar todos los registros")
+        print("3. Cancelar")
+
+        opcion = input("Seleccione una opción: ").strip()
+
+        if opcion in ("1", "2", "3"):
+            return opcion
+
+        print("Opción inválida.")
+
+def solicitar_confirmacion(mensaje):
+    """Solicita al usuario una confirmación mediante s/n.
+    Args: mensaje(str): Mensaje que se mostrará
+    Returns: booleano (True confirmacion, False si cancela)"""
+    while True:
+        respuesta = input(f"{mensaje} (s/n): ").strip().lower()
+        
+        if respuesta == "s":
+            return True
+        
+        if respuesta == "n":
+            return False
+        
+        print("Opción invalida. Introduzca s o n")
+
+        
+def eliminar_un_registro(datos, registros_empleado):
+    """Eliminar un registro de un empleado despues de solicitar confirmacion
+    Args: datos(list), registros_empleados(list): registros pertencientes al empleado
+    Returns: Ninguno"""
+    
+    registro_seleccionado = solicitar_registro_a_eliminar(
+        registros_empleado
+    )   
 
     mostrar_registros([registro_seleccionado])
 
@@ -157,36 +197,6 @@ def eliminar_todos_registros(datos, emp_id):
 
     time.sleep(1)
 
-
-def solicitar_opcion_eliminacion():
-    """Muestra el menú de eliminacion y solicita una opcion valida
-    Returns:opcion(str): opcion selecionada por el usuario"""
-    while True:
-        print("\n1. Eliminar un registro")
-        print("2. Eliminar todos los registros")
-        print("3. Cancelar")
-
-        opcion = input("Seleccione una opción: ").strip()
-
-        if opcion in ("1", "2", "3"):
-            return opcion
-
-        print("Opción inválida.")
-
-def solicitar_confirmacion(mensaje):
-    """Solicita al usuario una confirmación mediante s/n.
-    Args: mensaje(str): Mensaje que se mostrará
-    Returns: booleano (True confirmacion, False si cancela)"""
-    while True:
-        respuesta = input(f"{mensaje} (s/n): ").strip().lower()
-        
-        if respuesta == "s":
-            return True
-        
-        if respuesta == "n":
-            return False
-        
-        print("Opción invalida. Introduzca s o n")
 
 # 6. Función
 def crear_registro():
