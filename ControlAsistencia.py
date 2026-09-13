@@ -45,6 +45,9 @@ def calcular_horas(entrada, salida):
 
 #Funcion para mostrar registros 
 def mostrar_registros(registros):
+    """Muestra una lista de registros de asistencia en formato tabla.
+    Args: registros(list): lista de registros que se va a mostrar
+    Returns: Ninguno""" 
     print(
         f"{'ID':<5} | "
         f"{'Empleado':<8} | "
@@ -67,6 +70,10 @@ def mostrar_registros(registros):
         )
 
 def buscar_registro_por_id(registros, reg_id):
+    """Busca un registro concreto por su ID.
+    Args: registros(list), reg_id(int): id del registro
+    Returns: dict: registro encontrado, None: registro no encontrado
+    """
     for registro in registros:
         if registro["id"] == reg_id:
             return registro
@@ -74,12 +81,17 @@ def buscar_registro_por_id(registros, reg_id):
     return None
 
 def buscar_registros_por_empleado(datos, emp_id):
+    """Obtiene todos los registros de un empleado
+    Args: datos(list), emp_id(int): Id del empleado
+    Retrns: list: Regsitros del empleado"""
     return [
         registro for registro in datos
         if registro["empleado"] == emp_id
     ]
 
 def solicitar_id_empleado():
+    """Solicita y valida el Id de un empleado
+    Returns: str: Id del empleado valido"""
     while True:
         emp_id = input("Ingrese el ID del empleado: ").strip().upper()
 
@@ -89,6 +101,9 @@ def solicitar_id_empleado():
         print("ID de empleado inválido.")
         
 def eliminar_un_registro(datos, registros_empleado):
+    """Permite selecionar y eliminar un registro de un empleado
+    Args: datos(list), registros_empleados(list): registros pertencientes al empleado
+    Returns: Ninguno"""
     while True:
         try:
             reg_id = int(
@@ -124,6 +139,9 @@ def eliminar_un_registro(datos, registros_empleado):
     
 
 def eliminar_todos_registros(datos, emp_id):
+    """Elimina todos los registros de un empleado
+    Args: datos(list), emp_id(str): Id del empleado
+    Returns: Ninguno"""
     if solicitar_confirmacion(
         f"¿Está seguro de que desea eliminar todos los registros de {emp_id}?"
     ):
@@ -141,6 +159,8 @@ def eliminar_todos_registros(datos, emp_id):
 
 
 def solicitar_opcion_eliminacion():
+    """Muestra el menú de eliminacion y solicita una opcion valida
+    Returns:opcion(str): opcion selecionada por el usuario"""
     while True:
         print("\n1. Eliminar un registro")
         print("2. Eliminar todos los registros")
@@ -154,6 +174,9 @@ def solicitar_opcion_eliminacion():
         print("Opción inválida.")
 
 def solicitar_confirmacion(mensaje):
+    """Solicita al usuario una confirmación mediante s/n.
+    Args: mensaje(str): Mensaje que se mostrará
+    Returns: booleano (True confirmacion, False si cancela)"""
     while True:
         respuesta = input(f"{mensaje} (s/n): ").strip().lower()
         
@@ -260,8 +283,10 @@ def actualizar_registro():
     print("Registro no encontrado.")
 
 
-# 9. Función
+# 9. Función para Eliminar Registro
 def eliminar_registro():
+    """Gestiona el proceso para eliminar registros de un empleado
+    Returns: Ninguno"""
     datos = cargar_datos()
     
     if datos is None:
