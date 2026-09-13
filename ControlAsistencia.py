@@ -185,6 +185,26 @@ def eliminar_registro():
         print("No hay registros en el sistema")
         return
     
+    while True:
+        emp_id = input("Ingrese el ID del empleado: ").strip().upper()
+        
+        if validar_id_empleado(emp_id):
+            print(f"ID {emp_id} válido.\n")
+            break
+        
+        print("ID de empleado inválido")
+    
+    registros_empleado = [
+        registro for registro in datos
+        if registro["empleado"] == emp_id
+    ]
+    
+    if not registros_empleado:
+        print("No hay registros para este empleado.")
+        return
+    
+    mostrar_registros(registros_empleado)
+    
     try:
         reg_id = int(input("Ingrese el ID del registro a eliminar: ").strip())
     
