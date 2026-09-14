@@ -202,12 +202,13 @@ def solicitar_opcion_eliminacion():
         print("2. Eliminar todos los registros")
         print("3. Cancelar")
 
-        opcion = input("Seleccione una opción: ").strip()
+        while True:
+            opcion = input("Seleccione una opción: ").strip()
 
-        if opcion in ("1", "2", "3"):
-            return opcion
+            if opcion in ("1", "2", "3"):
+                return opcion
 
-        print("Opción inválida.")
+            print("Opción inválida.")
 
 
 def solicitar_confirmacion(mensaje):
@@ -233,6 +234,8 @@ def eliminar_un_registro(datos, registros_empleado):
 
     registro_seleccionado = solicitar_registro_a_eliminar(registros_empleado)
 
+    Borro()
+
     mostrar_registros([registro_seleccionado])
 
     if solicitar_confirmacion("¿Está seguro de que desea eliminar este registro?"):
@@ -243,6 +246,7 @@ def eliminar_un_registro(datos, registros_empleado):
         print("Eliminación cancelada.")
 
     time.sleep(1)
+    Borro()
 
 
 def eliminar_todos_registros(datos, emp_id):
@@ -585,15 +589,20 @@ def actualizar_registro():
 def eliminar_registro():
     """Gestiona el proceso para eliminar registros de un empleado
     Returns: Ninguno"""
+    
+    Borro()
+    
     datos = cargar_datos()
 
     if datos is None:
         time.sleep(1)
+        Borro()
         return
 
     if not datos:
         print("No hay registros en el sistema")
         time.sleep(1)
+        Borro()
         return
 
     emp_id = solicitar_id_empleado()
@@ -603,8 +612,10 @@ def eliminar_registro():
     if not registros_empleado:
         print("No hay registros para este empleado.")
         time.sleep(1)
+        Borro()
         return
 
+    Borro()
     mostrar_registros(registros_empleado)
 
     opcion = solicitar_opcion_eliminacion()
@@ -618,6 +629,7 @@ def eliminar_registro():
     elif opcion == "3":
         print("Eliminación cancelada.")
         time.sleep(1)
+        Borro()
 
 
 # 10. Funcion
