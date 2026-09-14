@@ -607,7 +607,7 @@ def actualizar_registro():
 
     if salida_actual == "Pendiente":
         # Si la salida está pendiente, las horas trabajadas también.
-        data_encontrada["horas_trabajadas"] = "Pendiente"
+        data_encontrada["horas_trabajadas"] = 0.00
 
     elif entrada_actual and salida_actual:
         try:
