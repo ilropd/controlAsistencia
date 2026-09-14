@@ -202,12 +202,13 @@ def solicitar_opcion_eliminacion():
         print("2. Eliminar todos los registros")
         print("3. Cancelar")
 
-        opcion = input("Seleccione una opción: ").strip()
+        while True:
+            opcion = input("Seleccione una opción: ").strip()
 
-        if opcion in ("1", "2", "3"):
-            return opcion
+            if opcion in ("1", "2", "3"):
+                return opcion
 
-        print("Opción inválida.")
+            print("Opción inválida.")
 
 
 def solicitar_confirmacion(mensaje):
@@ -233,6 +234,8 @@ def eliminar_un_registro(datos, registros_empleado):
 
     registro_seleccionado = solicitar_registro_a_eliminar(registros_empleado)
 
+    Borro()
+
     mostrar_registros([registro_seleccionado])
 
     if solicitar_confirmacion("¿Está seguro de que desea eliminar este registro?"):
@@ -243,6 +246,7 @@ def eliminar_un_registro(datos, registros_empleado):
         print("Eliminación cancelada.")
 
     time.sleep(1)
+    Borro()
 
 
 def eliminar_todos_registros(datos, emp_id):
@@ -303,7 +307,7 @@ def crear_registro():
     #  Bucle independiente para la hora de entrada
     while True:
         Borro()
-        print(f"--- 🔑 REGISTRAR ASISTENCIA 🔑 ---")
+        print(f"--- 🔑 REGISTRAR DE ENTRADA 🔑 ---")
         print(f"Empleado: {emp_id} | Fecha: {fecha}\n")
         #cancelacion
         entrada = input("Hora de entrada (HH:MM) o 'C' para cancelar: ").strip()
@@ -324,22 +328,29 @@ def crear_registro():
     #  Bucle independiente para hora de salida
     while True:
         Borro()
-        print(f"--- 🔑 REGISTRO DE ASISTENCIA 🔑 ---")
+        print(f"--- 🔑 REGISTRAR DE SALIDA 🔑 ---")
         print(f"Empleado: {emp_id} | Fecha: {fecha}")
         print(f"Entrada: {entrada}\n")
+        
+        salida = input("Hora de salida (HH:MM, ENTER si queda pendiente) o 'C' para cancelar: ").strip()
+        
         #cancelacion
-        salida = input("Hora de salida (HH:MM) o 'C' para cancelar: ").strip()
         if salida.upper() == "C":
             print("Operación cancelada.")
             time.sleep(1.5)
             return
+        #jornada pendiente
+        if salida == "":
+            salida = "Pendiente"
+            horas_totales = 0.0
+            break
+        
         #autocorreción de formato
         if len(salida) == 4 and salida[1] == ":":
             salida = "0" + salida
         #comprobación de formato
         if not validar_formato_hora(salida):
-            print("Formato incorrecto. Usa HH:MM.")
-
+            print("Formato incorrecto. Usa HH:MM o presiona ENTER..")
             time.sleep(2)
             continue
         #comprobación de error de salida
@@ -348,11 +359,12 @@ def crear_registro():
             print("Introduce nuevamente la hora de salida.\n")
             time.sleep(3)
             continue  # Reintenta la hora de salida
-
-        break
-
+        
+        horas_totales = calcular_horas(entrada, salida)
+        break  
+        
     # Cálculo de horas y creación de nuevo registro
-    horas_totales = calcular_horas(entrada, salida)
+    
     Borro()
     print("=== 🔑 REGISTRO DE ASISTENCIA 🔑 ===")
     print(f" • Empleado        : {emp_id}")
@@ -390,6 +402,8 @@ def crear_registro():
 
 # 7. Función
 def leer_registros():
+    Borro()
+    
     datos = cargar_datos()
 
     if datos is None:
@@ -397,11 +411,14 @@ def leer_registros():
 
     if not datos:
         print("No hay registros en el sistema.")
-        time.sleep(5)  # Aplico un Temporizador.
+        time.sleep(2)  # Aplico un Temporizador.
         Borro()
         return
-
+    print(f"--- 🗃️  LOS REGISTROS DE ASISTENCIA 🗃️ ---\n")
     mostrar_registros(datos)
+    
+    input("\nPulsa [ENTER] para volver al menú principal.")
+    Borro()
 
 
 # 8. Función
@@ -639,15 +656,20 @@ def actualizar_registro():
 def eliminar_registro():
     """Gestiona el proceso para eliminar registros de un empleado
     Returns: Ninguno"""
+    
+    Borro()
+    
     datos = cargar_datos()
 
     if datos is None:
         time.sleep(1)
+        Borro()
         return
 
     if not datos:
         print("No hay registros en el sistema")
         time.sleep(1)
+        Borro()
         return
 
     emp_id = solicitar_id_empleado()
@@ -657,8 +679,10 @@ def eliminar_registro():
     if not registros_empleado:
         print("No hay registros para este empleado.")
         time.sleep(1)
+        Borro()
         return
 
+    Borro()
     mostrar_registros(registros_empleado)
 
     opcion = solicitar_opcion_eliminacion()
@@ -672,6 +696,7 @@ def eliminar_registro():
     elif opcion == "3":
         print("Eliminación cancelada.")
         time.sleep(1)
+        Borro()
 
 
 # 10. Funcion
