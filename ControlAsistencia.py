@@ -85,40 +85,83 @@ def crear_registro(registros, guardar_datos_func):
         print(f"   Entrada actual: {registro_existente['entrada']}")
         print(f"   Salida actual : {registro_existente.get('salida', 'Pendiente')}")
         print("\n  Para realizar cambios, utiliza la opción 'Actualizar' en el menú principal.")
+        input("\nPresiona ENTER para volver al menú...")
         time.sleep(3)  # Pausa previa para permitir lectura
         Borro()
         return
     
     #  Bucle independiente para la hora de entrada
     while True:
-        entrada = input("Hora de entrada (HH:MM): ").strip()
+        Borro()
+        print(f"🔑 REGISTRAR ASISTENCIA 🔑")
+        print(f"Empleado: {emp_id} | Fecha: {fecha}\n")
+        #cancelacion
+        entrada = input("Hora de entrada (HH:MM) o 'C' para cancelar: ").strip()
+        if entrada.upper() == "C":
+            print("Operación cancelada.")
+            time.sleep(1.5)
+            Borro()
+            return
+        #autocorreción de formato
+        if len(entrada) == 4 and entrada[1] == ":":
+            entrada = "0" + entrada
+            
         if validar_formato_hora(entrada):
             break
         print("Formato de hora inválido. Use HH:MM.")
         time.sleep(2)
-        Borro()
             
-    # 5. Bucle independiente para hora de salida
+    #  Bucle independiente para hora de salida
     while True:
-        salida = input("Hora de salida (HH:MM): ").strip()
+        Borro()
+        print(f"🔑 REGISTRAR ASISTENCIA 🔑")
+        print(f"Empleado: {emp_id} | Fecha: {fecha}")
+        print(f"Entrada: {entrada}\n")
+        salida = input("Hora de salida (HH:MM) o 'C' para cancelar: ").strip()
         
+        #cancelacion
+        entrada = input("Hora de entrada (HH:MM) o 'C' para cancelar: ").strip()
+        if entrada.upper() == "C":
+            print("Operación cancelada.")
+            time.sleep(1.5)
+            Borro()
+            return
+        #autocorreción de formato
+        if len(entrada) == 4 and entrada[1] == ":":
+            entrada = "0" + entrada        
+        #comprobación de formato
         if not validar_formato_hora(salida):
             print("Formato incorrecto. Usa HH:MM.")
             time.sleep(2)
             Borro()
             continue
-        
+        #comprobación de error de salida
         if salida <= entrada:
             print(f"La hora de salida ({salida}) no puede ser anterior o igual a la de entrada ({entrada}).")
             print("Introduce nuevamente la hora de salida.\n")
             time.sleep(2)
-            Borro()
-            continue  # Reintenta ÚNICAMENTE la hora de salida
+            continue  # Reintenta la hora de salida
         
-        break  # Hora de salida completamente válida
+        break  
         
     # Cálculo de horas y creación de nuevo registro
     horas_totales = calcular_horas(entrada, salida)
+    Borro()
+    print("=== 🔑 REGISTRO DE ASISTENCIA 🔑 ===")
+    print(f" • Empleado        : {emp_id}")
+    print(f" • Fecha           : {fecha}")
+    print(f" • Hora Entrada    : {entrada}")
+    print(f" • Hora Salida     : {salida}")
+    print(f" • Horas Totales   : {horas_totales} h")
+    print("====================================")
+    #confirmacion antes de seguir
+    confirmar = input("\n¿Guardar este registro? s/n: ").strip().lower()
+    if confirmar not in ("s", "si"):
+        print("\nRegistro descartado.")
+        time.sleep(2)
+        Borro()
+        return
+    # asignacion de ID y guardado.
     nuevo_id = max([r.get("id", 0) for r in registros], default=0) + 1
 
     nuevo_registro = {
@@ -131,14 +174,12 @@ def crear_registro(registros, guardar_datos_func):
     }
 
     registros.append(nuevo_registro)
+    guardar_datos_func(registros) # Persistencia en JSON
+    
     print(f"\n Nuevo registro #{nuevo_id} guardado correctamente.")
     time.sleep(2)
     Borro()
     
-    # Persistencia en JSON
-    guardar_datos_func(registros)
-
-
 # 7. Función
 def leer_registros():
     datos = cargar_datos()
