@@ -261,7 +261,8 @@ def eliminar_todos_registros(datos, emp_id):
 
     time.sleep(1)
 
-def crear_registro(registros, guardar_datos_func):
+def crear_registro():
+    registros = cargar_datos()
     #  Captura del ID de empleado
     while True:
         Borro()
@@ -675,7 +676,7 @@ def menu() -> None:
 
         match opcion:
             case "1":
-                crear_registro(registros, guardar_datos)
+                crear_registro()
             case "2":
                 leer_registros()
             case "3":
