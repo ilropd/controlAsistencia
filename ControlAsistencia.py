@@ -414,6 +414,7 @@ def leer_registros():
         time.sleep(2)  # Aplico un Temporizador.
         Borro()
         return
+    print(f"--- 🗃️ LOS REGISTROS DE ASISTENCIA 🗃️ ---")
     mostrar_registros(datos)
     
     input("\nPulsa [ENTER] para volver al menú principal.")
