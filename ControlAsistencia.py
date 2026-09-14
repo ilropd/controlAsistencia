@@ -22,69 +22,121 @@ def guardar_datos(datos):
 
 
 # 3. Función
-def validar_formato_hora(hora):
+def validar_formato_hora(hora_str):
+    """Valida formato estricto de 24 horas (HH:MM)."""
     patron = r"^([01]\d|2[0-3]):([0-5]\d)$"
-    return bool(re.match(patron, hora))
+    return bool(re.match(patron, hora_str.strip()))
 
 
 # 4. Función
 def validar_id_empleado(emp_id):
+    """Valida que el ID tenga el formato: 3 letras mayúsculas + 3 dígitos (ej. EMP001)."""
     patron = r"^[A-Z]{3}\d{3}$"
-    return bool(re.match(patron, emp_id))
+    return bool(re.match(patron, emp_id.strip()))
 
 
 # 5. Función
 def calcular_horas(entrada, salida):
+    """Calcula horas trabajadas en formato decimal."""
     fmt = "%H:%M"
     t_entrada = datetime.strptime(entrada, fmt)
     t_salida = datetime.strptime(salida, fmt)
-    diferencia = t_salida - t_entrada
-    horas = diferencia.total_seconds() / 3600
-    return round(horas, 2)
+    diferencia = (t_salida - t_entrada).total_seconds()
+    
+    # Validar coherencia temporal
+    if diferencia < 0:
+        return None
+    # horas = diferencia.total_seconds() / 3600
+    # return round(horas, 2)
+    return round(diferencia / 3600, 2)
 
+# 5. Función.
+def buscar_registro_existente(registros, empleado_id, fecha):
+    """Busca si el empleado ya fichó en la fecha actual."""
+    for reg in registros:
+        if reg.get("empleado") == empleado_id and reg.get("fecha") == fecha:
+            return reg
+    return None
+def crear_registro(registros, guardar_datos_func):
+    #  Captura del ID de empleado
+    while True:
+        emp_id = input("ID del empleado (ej. EMP001) o 'C' para cancelar: ").strip().upper()
+        if emp_id == 'C':
+            print("Registro cancelado.")
+            time.sleep(2)
+            Borro()
+            return
 
-# 6. Función
-def crear_registro():
-    datos = cargar_datos()
-    emp_id = input("ID del empleado (ej. EMP001): ").upper()
-    if not validar_id_empleado(emp_id):
-        print(
-            "❌ Formato de ID inválido. Debe ser 3 letras y 3 números (ej. EMP001).❌"
-        )
-        time.sleep(5)  # Aplico un Temporizador.
+        if validar_id_empleado(emp_id):
+            break
+        
+        print("Formato de ID no válido. Introduce ID válido (ej. EMP001)")
+        time.sleep(2)
+        Borro()
+
+    #  Gestiona formato de fecha actual
+    fecha = datetime.now().strftime("%Y-%m-%d")
+    
+    #  Comprobación de registro existente en el día
+    registro_existente = buscar_registro_existente(registros, emp_id, fecha)
+    
+    if registro_existente:
+        print(f"\n El empleado {emp_id} ya tiene un registro hoy ({fecha}):")
+        print(f"   Entrada actual: {registro_existente['entrada']}")
+        print(f"   Salida actual : {registro_existente.get('salida', 'Pendiente')}")
+        print("\n  Para realizar cambios, utiliza la opción 'Actualizar' en el menú principal.")
+        time.sleep(3)  # Pausa previa para permitir lectura
         Borro()
         return
-
-    # Gestionamos formato de fechas y horas.
-    fecha = datetime.now().strftime("%Y-%m-%d")
-    entrada = input("Hora de entrada (HH:MM): ")
-    if not validar_formato_hora(entrada):
+    
+    #  Bucle independiente para la hora de entrada
+    while True:
+        entrada = input("Hora de entrada (HH:MM): ").strip()
+        if validar_formato_hora(entrada):
+            break
         print("Formato de hora inválido. Use HH:MM.")
-        return
-
-    salida = input("Hora de salida (HH:MM, presione Enter si queda pendiente): ")
-    horas_trabajadas = 0.0
-    if salida:
+        time.sleep(2)
+        Borro()
+            
+    # 5. Bucle independiente para hora de salida
+    while True:
+        salida = input("Hora de salida (HH:MM): ").strip()
+        
         if not validar_formato_hora(salida):
-            print("Formato de hora de salida inválido.")
-            return
-        horas_trabajadas = calcular_horas(entrada, salida)
+            print("Formato incorrecto. Usa HH:MM.")
+            time.sleep(2)
+            Borro()
+            continue
+        
+        if salida <= entrada:
+            print(f"La hora de salida ({salida}) no puede ser anterior o igual a la de entrada ({entrada}).")
+            print("Introduce nuevamente la hora de salida.\n")
+            time.sleep(2)
+            Borro()
+            continue  # Reintenta ÚNICAMENTE la hora de salida
+        
+        break  # Hora de salida completamente válida
+        
+    # Cálculo de horas y creación de nuevo registro
+    horas_totales = calcular_horas(entrada, salida)
+    nuevo_id = max([r.get("id", 0) for r in registros], default=0) + 1
 
-    nuevo_id = 1 if not datos else datos[-1]["id"] + 1
-
-    registro = {
+    nuevo_registro = {
         "id": nuevo_id,
         "empleado": emp_id,
         "fecha": fecha,
         "entrada": entrada,
-        "salida": salida if salida else "Pendiente",
-        "horas_trabajadas": horas_trabajadas,
+        "salida": salida,
+        "horas_trabajadas": horas_totales
     }
 
-    # Alta de registros en el archivo.
-    datos.append(registro)
-    guardar_datos(datos)
-    print("Registro guardado exitosamente.")
+    registros.append(nuevo_registro)
+    print(f"\n Nuevo registro #{nuevo_id} guardado correctamente.")
+    time.sleep(2)
+    Borro()
+    
+    # Persistencia en JSON
+    guardar_datos_func(registros)
 
 
 # 7. Función
@@ -155,6 +207,7 @@ def eliminar_registro():
 
 # 10. Función_
 def menu():
+    registros = cargar_datos() #añado cargar_datos para cargar los datos en todo el menu
     while True:
         print("\n--- 🔑 CONTROL DE ASISTENCIA 🔑 ---\n")
         print("1. Registrar Entrada/Salida (Crear)")
@@ -165,7 +218,7 @@ def menu():
         opcion = input("\nSeleccione una opción: ")
         # Creamos todo el CRUD
         if opcion == "1":
-            crear_registro()
+            crear_registro(registros, guardar_datos) # añado la lista y gurdar
         elif opcion == "2":
             leer_registros()
         elif opcion == "3":
