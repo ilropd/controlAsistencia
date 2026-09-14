@@ -303,7 +303,7 @@ def crear_registro():
     #  Bucle independiente para la hora de entrada
     while True:
         Borro()
-        print(f"--- 🔑 REGISTRAR ASISTENCIA 🔑 ---")
+        print(f"--- 🔑 REGISTRAR DE ENTRADA 🔑 ---")
         print(f"Empleado: {emp_id} | Fecha: {fecha}\n")
         #cancelacion
         entrada = input("Hora de entrada (HH:MM) o 'C' para cancelar: ").strip()
@@ -324,22 +324,29 @@ def crear_registro():
     #  Bucle independiente para hora de salida
     while True:
         Borro()
-        print(f"--- 🔑 REGISTRO DE ASISTENCIA 🔑 ---")
+        print(f"--- 🔑 REGISTRAR DE SALIDA 🔑 ---")
         print(f"Empleado: {emp_id} | Fecha: {fecha}")
         print(f"Entrada: {entrada}\n")
+        
+        salida = input("Hora de salida (HH:MM, ENTER si queda pendiente) o 'C' para cancelar: ").strip()
+        
         #cancelacion
-        salida = input("Hora de salida (HH:MM) o 'C' para cancelar: ").strip()
         if salida.upper() == "C":
             print("Operación cancelada.")
             time.sleep(1.5)
             return
+        #jornada pendiente
+        if salida == "":
+            salida = "Pendiente"
+            horas_totales = 0.0
+            break
+        
         #autocorreción de formato
         if len(salida) == 4 and salida[1] == ":":
             salida = "0" + salida        
         #comprobación de formato
         if not validar_formato_hora(salida):
-            print("Formato incorrecto. Usa HH:MM.")
-
+            print("Formato incorrecto. Usa HH:MM o presiona ENTER..")
             time.sleep(2)
             continue
         #comprobación de error de salida
@@ -349,10 +356,11 @@ def crear_registro():
             time.sleep(3)
             continue  # Reintenta la hora de salida
         
+        horas_totales = calcular_horas(entrada, salida)
         break  
         
     # Cálculo de horas y creación de nuevo registro
-    horas_totales = calcular_horas(entrada, salida)
+    
     Borro()
     print("=== 🔑 REGISTRO DE ASISTENCIA 🔑 ===")
     print(f" • Empleado        : {emp_id}")
