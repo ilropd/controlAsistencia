@@ -281,7 +281,7 @@ def crear_registro():
         if validar_id_empleado(emp_id):
             break
         Borro()
-        
+
         print("Formato de ID no válido. Introduce ID válido (ej. EMP001)")
         time.sleep(2)
         Borro()
@@ -319,12 +319,12 @@ def crear_registro():
         #autocorreción de formato
         if len(entrada) == 4 and entrada[1] == ":":
             entrada = "0" + entrada
-            
+
         if validar_formato_hora(entrada):
             break
         print("Formato de hora inválido. Use HH:MM.")
         time.sleep(2)
-            
+
     #  Bucle independiente para hora de salida
     while True:
         Borro()
@@ -347,7 +347,7 @@ def crear_registro():
         
         #autocorreción de formato
         if len(salida) == 4 and salida[1] == ":":
-            salida = "0" + salida        
+            salida = "0" + salida
         #comprobación de formato
         if not validar_formato_hora(salida):
             print("Formato incorrecto. Usa HH:MM o presiona ENTER..")
@@ -394,7 +394,7 @@ def crear_registro():
 
     registros.append(nuevo_registro)
     guardar_datos(registros) # Persistencia en JSON
-    
+
     print(f"\n Nuevo registro #{nuevo_id} guardado correctamente.")
     time.sleep(2)
     Borro()
@@ -423,75 +423,74 @@ def leer_registros():
 
 # 8. Función
 def actualizar_registro():
-    # Carga en memoria todos los registros almacenados para poder
-    # localizar y modificar el correspondiente al empleado.
+    # Carga en memoria todos los registros almacenados.
     datos = cargar_datos()
 
-    # Solicita el identificador del empleado hasta que se introduzca
-    # un valor válido y exista al menos un registro asociado.
+    # Solicita el identificador del empleado hasta que sea válido
+    # y exista al menos un registro asociado.
     while True:
         try:
-            empleado_id = input(msg("id_del_empleado")).upper()
+            empleado_id = input(msg("id_del_empleado")).upper().strip()
 
-            # Valida que el identificador introducido cumpla el formato
-            # establecido para los empleados.
+            # Valida el formato del identificador.
             if not validar_id_empleado(empleado_id):
                 raise ValueError
 
-            # Obtiene todos los registros asociados al empleado indicado.
+            # Obtiene todos los registros del empleado.
             coincidencias = [
-                data for data in datos if data.get("empleado") == empleado_id
+                data
+                for data in datos
+                if data.get("empleado") == empleado_id
             ]
 
-            # Si no existe ningún registro, informa al usuario y permite
-            # volver a introducir el identificador.
+            # Si no existen registros, permite introducir otro ID.
             if not coincidencias:
                 print(msg("registro_no_encontrado"))
                 input(msg("press_enter"))
                 Borro()
                 continue
 
-            # Si existen varios registros para el mismo empleado,
-            # se muestran todos para informar al usuario.
+            # Informa de si existe uno o varios registros.
             if len(coincidencias) == 1:
                 print(msg("registro_encontrado"))
             else:
                 print(msg("registros_encontrados"))
+
+            # Muestra los registros encontrados.
             for coincidencia in coincidencias:
                 print("-------------------------")
                 for key, value in coincidencia.items():
-                    print("".join(f"{str(key).upper()}: {value}"))
+                    print(f"{str(key).upper()}: {value}")
                 print("-------------------------")
+
             break
 
         except ValueError:
-            # Gestiona tanto un identificador con formato incorrecto
-            # como cualquier error de validación asociado al mismo.
             print(msg("formato_de_id_invalido"))
             input(msg("press_enter"))
             Borro()
-            continue
 
     # Solicita la fecha del registro que se desea modificar.
     while True:
         try:
             fecha = datetime.strptime(
-                input(msg("introduzca_fecha_para_cambios.")), "%Y-%m-%d"
+                input(msg("introduzca_fecha_para_cambios.")),
+                "%Y-%m-%d"
             ).date()
 
-            # Busca entre los registros del empleado aquel cuya fecha
-            # coincida con la seleccionada por el usuario.
+            fecha_str = fecha.strftime("%Y-%m-%d")
+
+            # Busca el registro correspondiente al empleado y fecha.
             data_encontrada = next(
                 (
                     data
                     for data in coincidencias
-                    if data.get("fecha") == fecha.strftime("%Y-%m-%d")
+                    if data.get("fecha") == fecha_str
                 ),
                 None,
             )
 
-            # Si no existe un registro para esa combinación de empleado
-            # y fecha, se solicita al usuario que seleccione otra fecha.
+            # Si no existe, solicita otra fecha.
             if data_encontrada is None:
                 print(msg("no_hay_registros_para_id_fecha_seleccionada."))
                 print(msg("seleccione_otra_fecha."))
@@ -502,97 +501,152 @@ def actualizar_registro():
             break
 
         except ValueError:
-            # Controla las fechas introducidas con un formato no válido.
             print(msg("fecha_invalida"))
             input(msg("press_enter"))
             Borro()
-            continue
 
-    # Solicita una nueva hora de entrada.
-    # Al pulsar Enter sin introducir ningún valor, se conserva la hora actual.
+    # ------------------------------------------------------------------
+    # HORA DE ENTRADA
+    # ------------------------------------------------------------------
+
     while True:
         try:
-            entrada = input(
+            entrada_input = input(
                 f"{msg('hora_de_entrada')}\n"
                 f"{msg('presione_enter_mantener_valor_actual')}"
-            )
+            ).strip()
 
-            if entrada == "":
+            # Enter = conservar la entrada actual.
+            if entrada_input == "":
                 entrada = None
                 break
 
-            entrada = datetime.strptime(entrada, "%H:%M").time()
+            entrada = datetime.strptime(
+                entrada_input,
+                "%H:%M"
+            ).time()
+
             break
 
         except ValueError:
-            # La hora debe respetar el formato de 24 horas HH:MM.
             print(msg("hora_invalida"))
 
-    # Solicita una nueva hora de salida.
-    # También permite establecer el estado "Pendiente".
+    # ------------------------------------------------------------------
+    # Determina cuál será realmente la hora de entrada después
+    # de la modificación.
+    # ------------------------------------------------------------------
+
+    if entrada is None:
+        entrada_final = data_encontrada.get("entrada")
+    else:
+        entrada_final = entrada.strftime("%H:%M")
+
+    # ------------------------------------------------------------------
+    # HORA DE SALIDA
+    # ------------------------------------------------------------------
+
     while True:
         try:
-            salida = input(
-                f"{msg('hora_de_salida')}\n"
+            salida_input = input(
+                f"{msg('hora_de_salida_actualizar')}\n"
                 f"{msg('presione_enter_mantener_valor_actual')}"
-            )
+            ).strip()
 
-            # Un valor vacío indica que se debe conservar la hora actual.
-            if salida == "":
+            # Enter = conservar la salida actual.
+            if salida_input == "":
                 salida = None
                 break
 
-            # Permite indicar que la jornada todavía no ha finalizado.
-            if salida.lower() == "pendiente":
+            # Permite dejar la jornada pendiente.
+            if salida_input.lower() == "pendiente":
                 salida = "Pendiente"
                 break
 
-            salida = datetime.strptime(salida, "%H:%M").time()
+            salida = datetime.strptime(
+                salida_input,
+                "%H:%M"
+            ).time()
 
-            # Si se ha introducido una nueva hora de entrada, comprueba
-            # que la salida sea posterior a dicha entrada.
-            if entrada is not None and salida <= entrada:
-                print(msg("hora_salida_posterior_hora_entrada"))
-                continue
+            # Si existe una entrada válida, comprueba que la salida
+            # sea posterior a ella.
+            if entrada_final and entrada_final != "Pendiente":
+                try:
+                    entrada_comparacion = datetime.strptime(
+                        entrada_final,
+                        "%H:%M"
+                    ).time()
+
+                    if salida <= entrada_comparacion:
+                        print(msg("hora_salida_posterior_hora_entrada"))
+                        continue
+
+                except ValueError:
+                    # Si la entrada almacenada tuviera un formato
+                    # incorrecto, no se bloquea la actualización.
+                    pass
 
             break
 
         except ValueError:
-            # Controla cualquier hora de salida que no cumpla el formato
-            # esperado.
             print(msg("hora_invalida"))
 
-    # Actualiza la hora de entrada únicamente si el usuario ha introducido
-    # un nuevo valor. Si es None, se mantiene el valor existente.
+    # ------------------------------------------------------------------
+    # Determina cuál será realmente la hora de salida después
+    # de la modificación.
+    # ------------------------------------------------------------------
+
+    if salida is None:
+        salida_final = data_encontrada.get("salida")
+    elif salida == "Pendiente":
+        salida_final = "Pendiente"
+    else:
+        salida_final = salida.strftime("%H:%M")
+
+    # ------------------------------------------------------------------
+    # ACTUALIZACIÓN DEL REGISTRO
+    # ------------------------------------------------------------------
+
     if entrada is not None:
         data_encontrada["entrada"] = entrada.strftime("%H:%M")
 
-    # Actualiza la hora de salida cuando se ha proporcionado un nuevo valor.
     if salida is not None:
         if salida == "Pendiente":
-            # Si la salida queda pendiente, las horas trabajadas también
-            # permanecen pendientes de cálculo.
             data_encontrada["salida"] = "Pendiente"
-            data_encontrada["horas_trabajadas"] = "Pendiente"
-
         else:
             data_encontrada["salida"] = salida.strftime("%H:%M")
 
-        # Calcula de nuevo las horas trabajadas únicamente cuando existen
-        # una entrada y una salida válidas y la salida no está pendiente.
-        if (
-            data_encontrada.get("entrada")
-            and data_encontrada.get("salida")
-            and data_encontrada["salida"] != "Pendiente"
-        ):
+    # ------------------------------------------------------------------
+    # RECÁLCULO DE HORAS TRABAJADAS
+    # ------------------------------------------------------------------
+
+    entrada_actual = data_encontrada.get("entrada")
+    salida_actual = data_encontrada.get("salida")
+
+    if salida_actual == "Pendiente":
+        # Si la salida está pendiente, las horas trabajadas también.
+        data_encontrada["horas_trabajadas"] = 0.00
+
+    elif entrada_actual and salida_actual:
+        try:
+            # Comprueba que ambas horas tengan un formato válido.
+            datetime.strptime(entrada_actual, "%H:%M")
+            datetime.strptime(salida_actual, "%H:%M")
+
+            # Recalcula las horas trabajadas.
             data_encontrada["horas_trabajadas"] = calcular_horas(
-                data_encontrada["entrada"], data_encontrada["salida"]
+                entrada_actual,
+                salida_actual
             )
 
-    # Persiste los cambios realizados en el almacenamiento de datos.
+        except ValueError:
+            # Si alguna de las horas almacenadas no es válida,
+            # no se realiza un cálculo incorrecto.
+            pass
+
+    # Persiste los cambios.
     guardar_datos(datos)
 
-    # Informa al usuario de que la actualización se ha completado.
+    # Informa al usuario.
     print(msg("registro_actualizado"))
     input(msg("press_enter"))
     Borro()

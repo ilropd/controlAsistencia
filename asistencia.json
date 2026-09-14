@@ -3,32 +3,32 @@
         "id": 1,
         "empleado": "EMP001",
         "fecha": "2026-09-11",
-        "entrada": "10:00",
-        "salida": "11:00",
-        "horas_trabajadas": 1.0
+        "entrada": "11:11",
+        "salida": "22:23",
+        "horas_trabajadas": 11.2
     },
     {
         "id": 2,
         "empleado": "EMP002",
         "fecha": "2026-09-11",
         "entrada": "10:00",
-        "salida": "19:00",
-        "horas_trabajadas": 9.0
+        "salida": "23:23",
+        "horas_trabajadas": 13.38
     },
     {
         "id": 3,
         "empleado": "EMP001",
         "fecha": "2026-09-14",
-        "entrada": "11:00",
-        "salida": "13:00",
-        "horas_trabajadas": 2.0
+        "entrada": "10:10",
+        "salida": "23:23",
+        "horas_trabajadas": 13.22
     },
     {
         "id": 4,
         "empleado": "EMP000",
         "fecha": "2026-09-14",
         "entrada": "09:00",
-        "salida": "11:00",
-        "horas_trabajadas": 2.0
+        "salida": "Pendiente",
+        "horas_trabajadas": "Pendiente"
     }
 ]
