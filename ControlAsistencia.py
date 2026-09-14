@@ -394,6 +394,8 @@ def crear_registro():
 
 # 7. Función
 def leer_registros():
+    Borro()
+    
     datos = cargar_datos()
 
     if datos is None:
@@ -401,11 +403,13 @@ def leer_registros():
 
     if not datos:
         print("No hay registros en el sistema.")
-        time.sleep(5)  # Aplico un Temporizador.
+        time.sleep(2)  # Aplico un Temporizador.
         Borro()
         return
-
     mostrar_registros(datos)
+    
+    input("\nPulsa [ENTER] para volver al menú principal.")
+    Borro()
 
 
 # 8. Función
