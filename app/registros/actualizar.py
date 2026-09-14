@@ -45,10 +45,10 @@ def actualizar_registro():
             else:
                 print(msg("registros_encontrados"))
             for coincidencia in coincidencias:
-                print("-------------------------")
+                print("-"*25)
                 for key, value in coincidencia.items():
                     print("".join(f"{str(key).upper()}: {value}"))
-                print("-------------------------")
+                print("-"*25)
             break
 
         except ValueError:
