@@ -381,7 +381,7 @@ def crear_registro():
     }
 
     registros.append(nuevo_registro)
-    guardar_datos_func(registros) # Persistencia en JSON
+    guardar_datos(registros) # Persistencia en JSON
     
     print(f"\n Nuevo registro #{nuevo_id} guardado correctamente.")
     time.sleep(2)
